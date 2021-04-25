@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StudentsPage() {
+function AdministratorPage() {
   const classes = useStyles();
 
   return (
@@ -23,4 +23,4 @@ function StudentsPage() {
   );
 }
 
-export default StudentsPage;
+export default AdministratorPage;

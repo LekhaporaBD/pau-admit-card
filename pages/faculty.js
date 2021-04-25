@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicTextFields() {
+function FacultyPage() {
   const classes = useStyles();
 
   return (
@@ -22,3 +22,5 @@ export default function BasicTextFields() {
     </form>
   );
 }
+
+export default FacultyPage;
