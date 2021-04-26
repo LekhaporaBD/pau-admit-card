@@ -12,7 +12,7 @@ const Login = () => {
     
     const [studentData , setStudentData] = useState({})    
     
-    const [due , setdue ] = useState(studentData[' Cumulative Dues '])
+    const [due , setdue ] = useState('')
 
     
       const handleChange = (prop) => (event) => {
@@ -100,15 +100,15 @@ const Login = () => {
 
                     <p> Name : {studentData.Name}</p>
                     <p> ID : {studentData.ID}</p>
-                    <label className={Styles.label}>
+                    <p> Dues :  <label className={Styles.label}>
                         <input 
                         type = "text" 
                         placeholder = "Cumulative Dues" 
-                        className = {Styles.input} 
+                        className = {Styles.input}
                         onChange = {(e) => setdue(e.target.value)}
                         value = {due}
                         />
-                    </label>
+                    </label></p>
                 
 
                     <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={handleUpdate}>
