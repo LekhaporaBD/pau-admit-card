@@ -1,9 +1,10 @@
-import React,{useState} from 'react'
-import Image from 'next/image'
-import Styles from '../styles/faculty.module.scss'
-import axios from 'axios'
-import Router from 'next/router'
-import QRCode from 'qrcode.react'
+import React,{useState} from 'react';
+import Image from 'next/image';
+import Styles from '../styles/faculty.module.scss';
+import axios from 'axios';
+import AdmitCardGenerator from '../components/admitCardGenerator';
+import Router from 'next/router';
+import QRCode from 'qrcode.react';
 
 
 const Login = () => {   
@@ -53,7 +54,7 @@ const Login = () => {
             <div className={Styles.mainDiv}>
 
                 <div style={{marginBottom : '2rem' , textAlign:'center'}}>
-                    <Image src='/../public/logo.png' alt="me" width="120" height="130" />
+                    <Image src='/logo.png' alt="me" width="120" height="130" />
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
@@ -75,18 +76,23 @@ const Login = () => {
                     { err && <p style={{color:'red'}} > {err} </p>}
 
                     <div className={Styles.optionHolder} >
+                    <div className={Styles.selectWrapper}>
+
                         <select className={`${Styles.examSession} ${Styles.select}`} >
-                            <option value="0" selected disabled > Choose Exam session </option>
+                            <option value="0" selected disabled >Exam session </option>
                             <option value="1"  > Summer 2021 </option>
                             <option value="2" disabled > Fall 2021 </option>
                             <option value="3" disabled > Spring 2021 </option>
                         </select>
+                        </div>
+                        <div className={Styles.selectWrapper}>
 
                         <select className={`${Styles.examType} ${Styles.select}`} >
-                            <option value="7" selected disabled > Choose Exam Type </option>
+                            <option value="7" selected disabled >Exam Type </option>
                             <option value="8"  > Mid Exam </option>
                             <option value="9"  > Final Exam </option>
-                        </select>                   
+                        </select>          
+                        </div>         
                     </div>
 
                     <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
@@ -118,8 +124,6 @@ const Login = () => {
 
                     </div>
                 }
-                
-                
             </div>
         </div>
     )
