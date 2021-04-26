@@ -39,7 +39,8 @@ const Login = () => {
          console.log(error);
         })
 
-        
+         
+
         setValues({studentid : ''})
       }
     
@@ -48,19 +49,14 @@ const Login = () => {
             <div className={Styles.mainDiv}>
 
                 <div style={{marginBottom : '2rem' , textAlign:'center'}}>
-                    <Image src='/../public/logo.png' alt="me" width="120" height="130" />
+                    <Image src='/../assets/logo.png' alt="me" width="120" height="130" />
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
                     <p style={{fontSize:30 , color:'darkblue'}} > Download Your Admit Card <br/> From Here  </p>
                 </div>
 
-                { Object.keys(studentData) === 0 ? 
-                
-                <div> {studentData.Name} </div>
-
-
-                :
+                { Object.keys(studentData).length === 0 ? 
                     
                 <form className={Styles.form}>
                     <label className={Styles.label}>
@@ -93,7 +89,17 @@ const Login = () => {
                         Log in
                     </button> 
 
-                </form>  }
+                </form>  
+                
+                :
+                           
+                 <div>  
+                 <p>{studentData.Name}</p>
+                 <p>{studentData.ID}</p>
+                 <p>{studentData[' Cumulative Dues ']}</p>
+                 </div>
+
+                }
                 
                 
             </div>
