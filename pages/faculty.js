@@ -93,7 +93,11 @@ const Login = () => {
                 
                 :
                            
-                 <div> {studentData.Name} </div>
+                 <div>  
+                 <p>{studentData.Name}</p>
+                 <p>{studentData.ID}</p>
+                 <p>{studentData[' Cumulative Dues ']}</p>
+                 </div>
 
                 }
                 
