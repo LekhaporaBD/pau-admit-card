@@ -23,22 +23,47 @@ export default async(req, res) => {
   }
   
 
-  else if(method === 'PUT'){
-    const db = client.db();
-// console.log(req.body._id);
+//   else if(method === 'PUT'){
+//     const db = client.db();
+// // console.log(req.body._id);
 
-    try{
-     const data = await db.collection('studentInfo').findOneAndUpdate( ID , req.body , { new : true });
-console.log(data);
+//     try{ 
+//      const data = await db.collection('studentInfo').findOneAndUpdate( ID , req.body , { new : true });
+//   console.log(data);
 
-    if(!data) { res.status(400).json({error : error}); }
+//     if(!data) { res.status(400).json({error : error}); }
 
-      res.status(200).json(data);
-    }
-    catch(error){
-      res.status(400).json({error : error});
-    }
+//       res.status(200).json(data);
+//     }
+//     catch(error){
+//       res.status(400).json({error : error});
+//     }
+//   }
+
+
+else if(method === 'PUT'){
+  const db = client.db();
+console.log(req.body);
+
+  try{ 
+   const data = await db.collection('studentInfo').updateOne( {ID : req.body.ID} , 
+    {
+      $set :{
+        [' Cumulative Dues '] : req.body[' Cumulative Dues '],
+        havePermission : req.body.havePermission
+      }
+   } );
+
+
+  if(!data) { res.status(400).json({error : ' in if'}); }
+
+    res.status(200).json(data);
   }
+  catch(error){
+    res.status(400).json({error : 'in catch'});
+  }
+}
+
 
   client.close();
 }

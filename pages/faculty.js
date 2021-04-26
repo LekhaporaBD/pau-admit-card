@@ -5,7 +5,7 @@ import axios from 'axios';
 import AdmitCardGenerator from '../components/admitCardGenerator';
 import Router from 'next/router';
 import QRCode from 'qrcode.react';
-
+import Spinner from '../components/spinner/spinner'
 
 const Login = () => {   
     
@@ -14,6 +14,8 @@ const Login = () => {
       });
 
     const [err , seterr ] = useState('')
+
+    const [submitClicked , setsubmitClicked ] = useState(false)
 
     const [studentData , setStudentData] = useState({})
 
@@ -27,7 +29,7 @@ const Login = () => {
       const handleSubmit = (e) => {
 
         e.preventDefault();
-
+        setsubmitClicked(true)
         let id = values.studentid
 
         if(id.length < 9) seterr('Invalid Student ID ')
@@ -61,7 +63,7 @@ const Login = () => {
                     <p style={{fontSize:30 , color:'darkblue'}} > Download Your Admit Card <br/> From Here  </p>
                 </div>
 
-                { Object.keys(studentData).length === 0 ? 
+                { (submitClicked && Object.keys(studentData).length === 0 ) ? <Spinner /> : Object.keys(studentData).length === 0 ? 
                     
                 <form className={Styles.form}>
                     <label className={Styles.label}>
@@ -100,7 +102,7 @@ const Login = () => {
                     </button> 
 
                 </form>  
-                
+                 
                 :
                            
                  <div className={Styles.studentData}>  

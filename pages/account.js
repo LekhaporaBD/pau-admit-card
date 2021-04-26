@@ -2,14 +2,21 @@ import React,{useState} from 'react'
 import Image from 'next/image'
 import Styles from '../styles/faculty.module.scss'
 import axios from 'axios'
-
+import Spinner from '../components/spinner/spinner'
+import Alert from '@material-ui/lab/Alert';
+import Router from 'next/router';
 
 const Login = () => {   
     
     const [values, setValues] = useState({studentid: ''});
 
     const [err , seterr ] = useState('')
+
+    const [submitClicked , setsubmitClicked ] = useState(false)
     
+    const [showAlert , setshowAlert ] = useState(false)
+    const [showError , setshowError ] = useState(false)
+
     const [studentData , setStudentData] = useState({})    
     
     const [due , setdue ] = useState('')
@@ -20,13 +27,26 @@ const Login = () => {
         seterr('')
       };
       
-      const handleUpdate = () => {}
+      const handleUpdate = () => {
+        studentData[' Cumulative Dues '] = due;
+
+        let id = studentData.ID;
+        
+        axios.put(`/api/student/${id}` , studentData )
+        .then(function (res) {
+            console.log(res.data);
+            setshowAlert(true)
+            // setStudentData(res.data)
+        })
+        .catch(function (error) {console.log(error) ; setshowError(true)})
+        
+      }
 
 
       const handleSubmit = (e) => {
 
         e.preventDefault();
-
+        setsubmitClicked(true)
         let id = values.studentid
 
         if(id.length < 9) seterr('Invalid Student ID ')
@@ -59,7 +79,10 @@ const Login = () => {
                     <p style={{fontSize:30 , color:'darkblue'}} > Choose A Student <br/> From Here  </p>
                 </div>
 
-                { Object.keys(studentData).length === 0 ? 
+                { showAlert? <Alert severity="success"><p> You successfully Changed him/her Special Permission Status</p>  <button onClick={() => Router.reload(window.location.pathname)} className={`${Styles.red} ${Styles.button}`}> Go Back To The Main Page</button> </Alert> :
+                   showError ?  <Alert severity="error"><p> There is something worng. </p>  <button onClick={() => Router.reload(window.location.pathname)} className={`${Styles.red} ${Styles.button}`}> Go Back And try again </button></Alert> : 
+                    (submitClicked && Object.keys(studentData).length === 0 ) ? <Spinner /> :
+                     Object.keys(studentData).length === 0 ? 
                     
                 <form className={Styles.form}>
                     <label className={Styles.label}>
@@ -109,9 +132,10 @@ const Login = () => {
                         <input 
                         type = "text" 
                         placeholder = "Cumulative Dues" 
-                        className = {Styles.input}
+                        className = {Styles.input} 
+                        style={{textAlign:'center' }}
                         onChange = {(e) => setdue(e.target.value)}
-                        value = {due}
+                        value = {due.length === 0  ? studentData[' Cumulative Dues '] : due}
                         />
                     </label></p>
                 

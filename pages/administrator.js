@@ -2,7 +2,9 @@ import React,{useState} from 'react'
 import Image from 'next/image'
 import Styles from '../styles/faculty.module.scss'
 import axios from 'axios'
-
+import Spinner from '../components/spinner/spinner'
+import Alert from '@material-ui/lab/Alert';
+import Router from 'next/router';
 
 const Login = () => {   
     
@@ -12,6 +14,12 @@ const Login = () => {
 
     const [err , seterr ] = useState('')
 
+    const [submitClicked , setsubmitClicked ] = useState(false)
+    // const [checked , setchecked ] = useState(false)
+
+    const [showAlert , setshowAlert ] = useState(false)
+    const [showError , setshowError ] = useState(false)
+
     const [studentData , setStudentData] = useState({})
 
     
@@ -20,13 +28,29 @@ const Login = () => {
         seterr('')
       };
       
-      const handleUpdate = () => {}
+      const handleUpdate = () => {
+        studentData['havePermission'] = checked;
 
+        let id = studentData.ID;
+
+        axios.put(`/api/student/${id}` , studentData )
+        .then(function (res) {
+            console.log(res.data);
+            setshowAlert(true)
+            // setStudentData(res.data)
+        })
+        .catch(function (error) {
+         console.log(error);
+         setshowError(true)
+        })
+
+        
+      }
 
       const handleSubmit = (e) => {
 
         e.preventDefault();
-
+        setsubmitClicked(true)
         let id = values.studentid
 
         if(id.length < 9) seterr('Invalid Student ID ')
@@ -35,8 +59,10 @@ const Login = () => {
 
         axios.get(`/api/student/${id}`)
         .then(function (res) {
-            console.log(res);
+            // console.log(res);
             setStudentData(res.data)
+            const [checked , setchecked ] = useState(studentData.havePermission)
+            // setchecked(studentData.havePermission)
         })
         .catch(function (error) {
          console.log(error);
@@ -59,7 +85,10 @@ const Login = () => {
                     <p style={{fontSize:30 , color:'darkblue'}} > Choose A Student <br/> From Here  </p>
                 </div>
 
-                { Object.keys(studentData).length === 0 ? 
+                { showAlert? <Alert severity="success"><p> You successfully Changed him/her Special Permission Status</p>  <button onClick={() => Router.reload(window.location.pathname)} className={`${Styles.red} ${Styles.button}`}> Go Back To The Main Page</button> </Alert> :
+                   showError ?  <Alert severity="error"><p> There is something worng. </p>  <button onClick={() => Router.reload(window.location.pathname)} className={`${Styles.red} ${Styles.button}`}> Go Back And try again </button></Alert> : 
+                  (submitClicked && Object.keys(studentData).length === 0 ) ? <Spinner /> : 
+                  Object.keys(studentData).length === 0 ? 
                     
                 <form className={Styles.form}>
                     <label className={Styles.label}>
@@ -99,8 +128,8 @@ const Login = () => {
 
                 </form>  
                 
-                :
-                           
+                :  
+                            
                  <div className={Styles.studentData}>  
 
                     <p> Name : {studentData.Name}</p>
@@ -109,8 +138,8 @@ const Login = () => {
 
                     <p style={{display:'flex'}}> Give Special Permission : 
                     <label className={Styles.toggleLabel}>
-                      <div className={Styles.switchContainer}>
-                        <input className={Styles.switch}  type="checkbox" name="check" value="check" />
+                      <div className={Styles.switchContainer}> 
+                        <input className={Styles.switch}  type="checkbox" name="check" value="check" checked={checked} onChange={ () => setchecked( prevState => !prevState) }/>
                         <div className={Styles.toggle}></div>
                       </div>
                     </label></p>
