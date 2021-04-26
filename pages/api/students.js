@@ -7,5 +7,9 @@ export default async(req, res) => {
     const data = await db.collection('studentInfo').find().toArray();
     res.status(200).json(data);
   }
+  // To edit Student Payment Info
+  if(req.method === 'PUT'){
+
+  }
 }
 
