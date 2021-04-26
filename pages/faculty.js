@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
-import Image from 'next/image'
-import Styles from '../styles/faculty.module.scss'
-import axios from 'axios'
-import AdmitCardGenerator from '../components/admitCardGenerator'
+import React,{useState} from 'react';
+import Image from 'next/image';
+import Styles from '../styles/faculty.module.scss';
+import axios from 'axios';
+import AdmitCardGenerator from '../components/admitCardGenerator';
+import Router from 'next/router';
+import QRCode from 'qrcode.react';
 
 
 const Login = () => {   
@@ -20,6 +22,7 @@ const Login = () => {
         setValues({ ...values, [prop]: event.target.value });
         seterr('')
       };
+
       
       const handleSubmit = (e) => {
 
@@ -45,6 +48,7 @@ const Login = () => {
         setValues({studentid : ''})
       }
     
+
     return (
         <div className={Styles.container}> 
             <div className={Styles.mainDiv}>
@@ -87,19 +91,33 @@ const Login = () => {
                     </div>
 
                     <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
-                        Log in
+                        Verify Student
                     </button> 
 
                 </form>  
                 
                 :
-                  <>       
-                 <div>  
-                 <p>{studentData.Name}</p>
-                 <p>{studentData.ID}</p>
-                 <p>{studentData[' Cumulative Dues ']}</p>
-                 </div>
-                </>
+                           
+                 <div className={Styles.studentData}>  
+
+                    <p> Name : {studentData.Name}</p>
+                    <p> ID : {studentData.ID}</p>
+                    
+                  { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
+                    <p> {studentData.Name} is <br/> Allowed For Sitting In The Exam  </p> : 
+                    <p> {studentData.Name} is <br/> <span style={{color:'red'}}> Not </span> Allowed For Sitting In The Exam  </p>  
+                      
+                  }
+                 
+                    <div style={{textAlign:'center'}}>
+                     <QRCode value={`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`}  />
+                    </div>
+
+                 <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={() => Router.reload(window.location.pathname)}>
+                       Check Another
+                 </button> 
+
+                    </div>
                 }
                 
                 <AdmitCardGenerator/>

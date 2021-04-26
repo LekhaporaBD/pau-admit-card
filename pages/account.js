@@ -6,13 +6,13 @@ import axios from 'axios'
 
 const Login = () => {   
     
-    const [values, setValues] = useState({
-        studentid: '',
-      });
+    const [values, setValues] = useState({studentid: ''});
 
     const [err , seterr ] = useState('')
-
-    const [studentData , setStudentData] = useState({})
+    
+    const [studentData , setStudentData] = useState({})    
+    
+    const [due , setdue ] = useState(studentData[' Cumulative Dues '])
 
     
       const handleChange = (prop) => (event) => {
@@ -100,17 +100,18 @@ const Login = () => {
 
                     <p> Name : {studentData.Name}</p>
                     <p> ID : {studentData.ID}</p>
-                    <p> Cumulative Dues : {studentData[' Cumulative Dues ']}</p>
+                    <label className={Styles.label}>
+                        <input 
+                        type = "text" 
+                        placeholder = "Cumulative Dues" 
+                        className = {Styles.input} 
+                        onChange = {(e) => setdue(e.target.value)}
+                        value = {due}
+                        />
+                    </label>
+                
 
-                    <p style={{display:'flex'}}> Give Special Permission : 
-                    <label className={Styles.toggleLabel}>
-                      <div className={Styles.switchContainer}>
-                        <input className={Styles.switch}  type="checkbox" name="check" value="check" />
-                        <div className={Styles.toggle}></div>
-                      </div>
-                    </label></p>
-
-                    <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleUpdate}>
+                    <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={handleUpdate}>
                         Update Student
                     </button> 
 
