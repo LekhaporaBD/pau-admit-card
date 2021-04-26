@@ -76,18 +76,23 @@ const Login = () => {
                     { err && <p style={{color:'red'}} > {err} </p>}
 
                     <div className={Styles.optionHolder} >
+                    <div className={Styles.selectWrapper}>
+
                         <select className={`${Styles.examSession} ${Styles.select}`} >
-                            <option value="0" selected disabled > Choose Exam session </option>
+                            <option value="0" selected disabled >Exam session </option>
                             <option value="1"  > Summer 2021 </option>
                             <option value="2" disabled > Fall 2021 </option>
                             <option value="3" disabled > Spring 2021 </option>
                         </select>
+                        </div>
+                        <div className={Styles.selectWrapper}>
 
                         <select className={`${Styles.examType} ${Styles.select}`} >
-                            <option value="7" selected disabled > Choose Exam Type </option>
+                            <option value="7" selected disabled >Exam Type </option>
                             <option value="8"  > Mid Exam </option>
                             <option value="9"  > Final Exam </option>
-                        </select>                   
+                        </select>          
+                        </div>         
                     </div>
 
                     <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
@@ -119,8 +124,6 @@ const Login = () => {
 
                     </div>
                 }
-                
-                <AdmitCardGenerator/>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import imageUrI from './imageUrI'
 import Styles from '../styles/faculty.module.scss';
 
 
-const AdmitCardGenerator = () => {
+const AdmitCardGenerator = ({studentData}) => {
   const handleSubmit = () => {
     const doc = new jsPDF({
       orientation: 'l',
@@ -30,15 +30,15 @@ const AdmitCardGenerator = () => {
     doc.setFontSize(20)
     doc.text(50, 150, 'Name')
     doc.text(135, 150, ':')
-    doc.text(150, 150, 'Rakib Nazrul')
+    doc.text(150, 150, studentData.Name)
 
     doc.text(50, 180, 'Id')
     doc.text(135, 180, ':')
-    doc.text(150, 180, '171054042')
+    doc.text(150, 180, studentData.ID)
 
     doc.text(50, 210, 'Batch: ')
     doc.text(135, 210, ':')
-    doc.text(150, 210, '171')
+    doc.text(150, 210, studentData.ID.trim().substring(0,3))
 
     doc.text(50, 240, 'Department')
     doc.text(135, 240, ':')
