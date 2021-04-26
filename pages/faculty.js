@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import Image from 'next/image'
 import Styles from '../styles/faculty.module.scss'
 import axios from 'axios'
+import AdmitCardGenerator from '../components/admitCardGenerator'
 
 
 const Login = () => {   
@@ -49,7 +50,7 @@ const Login = () => {
             <div className={Styles.mainDiv}>
 
                 <div style={{marginBottom : '2rem' , textAlign:'center'}}>
-                    <Image src='/../assets/logo.png' alt="me" width="120" height="130" />
+                    <Image src='/logo.png' alt="me" width="120" height="130" />
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
@@ -92,16 +93,16 @@ const Login = () => {
                 </form>  
                 
                 :
-                           
+                  <>       
                  <div>  
                  <p>{studentData.Name}</p>
                  <p>{studentData.ID}</p>
                  <p>{studentData[' Cumulative Dues ']}</p>
                  </div>
-
+                </>
                 }
                 
-                
+                <AdmitCardGenerator/>
             </div>
         </div>
     )
