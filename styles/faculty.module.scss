@@ -1,0 +1,137 @@
+$ruler: 16px;
+$color-red: #AE1100;
+$color-bg: #EBECF0;
+$color-shadow: #BABECC;
+$color-white: #FFF;
+
+
+
+.container,  .input, .button , .select {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+}
+
+.container{
+  background-color:$color-bg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+
+.mainDiv{
+  box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+  padding: 5rem 2rem;
+  border-radius: 14px;
+}
+
+.form {
+  padding: 16px;
+  width: 100%; 
+  margin: 0 auto;
+}
+
+
+.button, .input, .select{
+  border: 0;
+  outline: 0;
+  font-size: 16px;
+  border-radius: 100px;
+  padding: 16px;
+  background-color:$color-bg;
+  text-shadow: 1px 1px 0 $color-white;
+}
+
+.label {
+  display: block;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.input {
+  margin-right: 8px;
+  box-shadow:  inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    box-shadow:  inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+  }
+}
+
+
+.optionHolder{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (max-width:480px) {
+    flex-direction: column;
+    & > select {
+     width: 100%
+    }
+  }
+}
+
+.select{
+
+  box-shadow:  inset 2px 2px 5px $color-shadow, inset -5px -5px 10px $color-white;
+  padding: 16px;
+  color: #606060;
+
+
+  &:focus {
+    box-shadow:  inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+  }
+
+  @media (max-width:480px) {
+    margin-bottom: 20px;
+  }
+}
+
+.examSession{
+  width: 55%
+}
+
+.examType{
+  width: 40%
+}
+
+// @media (max-width:480px) {
+
+// }
+
+.button {
+  color:#61677C;
+  font-weight: bold;
+  box-shadow: -5px -5px 20px $color-white,  5px 5px 20px $color-shadow;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 50px;
+  
+  &:hover {
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+    
+  }
+  
+  &:active {
+    box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+    
+  }  
+
+  &.red {
+    display: block;
+    width: 100%;
+    color:$color-red;
+  }
+}
+
+
