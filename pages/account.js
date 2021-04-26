@@ -2,27 +2,27 @@ import React,{useState} from 'react'
 import Image from 'next/image'
 import Styles from '../styles/faculty.module.scss'
 import axios from 'axios'
-import Router from 'next/router'
-import QRCode from 'qrcode.react'
 
 
 const Login = () => {   
     
-    const [values, setValues] = useState({
-        studentid: '',
-      });
+    const [values, setValues] = useState({studentid: ''});
 
     const [err , seterr ] = useState('')
-
-    const [studentData , setStudentData] = useState({})
+    
+    const [studentData , setStudentData] = useState({})    
+    
+    const [due , setdue ] = useState(studentData[' Cumulative Dues '])
 
     
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
         seterr('')
       };
-
       
+      const handleUpdate = () => {}
+
+
       const handleSubmit = (e) => {
 
         e.preventDefault();
@@ -47,7 +47,6 @@ const Login = () => {
         setValues({studentid : ''})
       }
     
-
     return (
         <div className={Styles.container}> 
             <div className={Styles.mainDiv}>
@@ -57,7 +56,7 @@ const Login = () => {
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
-                    <p style={{fontSize:30 , color:'darkblue'}} > Download Your Admit Card <br/> From Here  </p>
+                    <p style={{fontSize:30 , color:'darkblue'}} > Choose A Student <br/> From Here  </p>
                 </div>
 
                 { Object.keys(studentData).length === 0 ? 
@@ -90,7 +89,7 @@ const Login = () => {
                     </div>
 
                     <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
-                        Verify Student
+                        Search Student
                     </button> 
 
                 </form>  
@@ -101,24 +100,23 @@ const Login = () => {
 
                     <p> Name : {studentData.Name}</p>
                     <p> ID : {studentData.ID}</p>
-                    
-                  { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-                    <p> {studentData.Name} is <br/> Allowed For Sitting In The Exam  </p> : 
-                    <p> {studentData.Name} is <br/> <span style={{color:'red'}}> Not </span> Allowed For Sitting In The Exam  </p>  
-                      
-                  }
-                 
-                    <div style={{textAlign:'center'}}>
-                     <QRCode value={`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`}  />
-                    </div>
+                    <label className={Styles.label}>
+                        <input 
+                        type = "text" 
+                        placeholder = "Cumulative Dues" 
+                        className = {Styles.input} 
+                        onChange = {(e) => setdue(e.target.value)}
+                        value = {due}
+                        />
+                    </label>
+                
 
-                 <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={() => Router.reload(window.location.pathname)}>
-                       Check Another
-                 </button> 
+                    <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={handleUpdate}>
+                        Update Student
+                    </button> 
 
                     </div>
                 }
-                
                 
             </div>
         </div>
