@@ -5,6 +5,7 @@ import axios from 'axios'
 import QRCode from 'qrcode.react'
 import AdmitCardGenerator from '../components/admitCardGenerator'
 import Spinner from '../components/spinner/spinner'
+import Router from 'next/router';
 
 const Login = () => {   
     
@@ -53,7 +54,7 @@ const Login = () => {
             <div className={Styles.mainDiv}>
 
                 <div style={{marginBottom : '2rem' , textAlign:'center'}}>
-                    <Image src='/../public/logo.png' alt="me" width="120" height="130" />
+                    <Image src='/logo.png' alt="me" width="120" height="130" />
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
@@ -110,7 +111,13 @@ const Login = () => {
                     </div>
 
                     { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-                        <AdmitCardGenerator studentData={studentData}/> : null
+
+                        <AdmitCardGenerator studentData={studentData}/> : 
+
+                            <button className={`${Styles.red} ${Styles.button}`} type="button" 
+                                onClick={ () => Router.reload(window.location.pathname) }>
+                                    Go Back 
+                            </button> 
                     }
 
                   </div>

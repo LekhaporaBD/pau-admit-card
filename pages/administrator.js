@@ -17,12 +17,14 @@ const Login = () => {
     const [submitClicked , setsubmitClicked ] = useState(false)
     // const [checked , setchecked ] = useState(false)
 
+
     const [showAlert , setshowAlert ] = useState(false)
     const [showError , setshowError ] = useState(false)
 
     const [studentData , setStudentData] = useState({})
-
+    const [checked , setchecked ] = useState(studentData.havePermission)
     
+    console.log(checked)
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
         seterr('')
@@ -59,10 +61,8 @@ const Login = () => {
 
         axios.get(`/api/student/${id}`)
         .then(function (res) {
-            // console.log(res);
             setStudentData(res.data)
-            const [checked , setchecked ] = useState(studentData.havePermission)
-            // setchecked(studentData.havePermission)
+            setchecked(res.data.havePermission)
         })
         .catch(function (error) {
          console.log(error);
@@ -78,7 +78,7 @@ const Login = () => {
             <div className={Styles.mainDiv}>
 
                 <div style={{marginBottom : '2rem' , textAlign:'center'}}>
-                    <Image src='/../public/logo.png' alt="me" width="120" height="130" />
+                    <Image src='/logo.png' alt="me" width="120" height="130" />
                 </div>
 
                 <div style={{margin : '2rem auto' , textAlign:'center'}}>
@@ -157,6 +157,3 @@ const Login = () => {
 }
 
 export default Login
-
-
-

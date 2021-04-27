@@ -5,6 +5,7 @@ import Styles from '../styles/faculty.module.scss';
 
 
 const AdmitCardGenerator = ({studentData}) => {
+
   const handleSubmit = () => {
     const doc = new jsPDF({
       orientation: 'l',
