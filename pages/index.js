@@ -5,6 +5,8 @@ import axios from 'axios'
 import QRCode from 'qrcode.react'
 import AdmitCardGenerator from '../components/admitCardGenerator'
 import Spinner from '../components/spinner/spinner'
+import Router from 'next/router';
+
 
 const Login = () => {   
     
@@ -78,9 +80,9 @@ const Login = () => {
                       <div className={Styles.selectWrapper}>
                         <select className={`${Styles.examSession} ${Styles.select}`} >
                             <option value="0" selected disabled > Exam session </option>
-                            <option value="1"  > Summer 2021 </option>
-                            <option value="2" disabled > Fall 2021 </option>
-                            <option value="3" disabled > Spring 2021 </option>
+                            <option value="1" disabled > Summer 2021 </option>
+                            <option value="2"  > Spring 2021 </option>
+                            <option value="3" disabled > Fall 2021 </option>
                         </select>
                         </div>
                         <div className={Styles.selectWrapper}>
@@ -110,7 +112,11 @@ const Login = () => {
                     </div>
 
                     { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-                        <AdmitCardGenerator studentData={studentData}/> : null
+                        <AdmitCardGenerator studentData={studentData}/> : 
+                           <button className={`${Styles.red} ${Styles.button}`} type="button" 
+                                onClick={ () => Router.reload(window.location.pathname) }>
+                                    Go Back 
+                            </button> 
                     }
 
                   </div>
