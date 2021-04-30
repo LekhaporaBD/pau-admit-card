@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import jsPDF from 'jspdf';
 import QRCode from 'qrcode'
 import imageUrI from './imageUrI'
+import { format } from 'date-fns';
+
 import Styles from '../styles/faculty.module.scss';
 
 
@@ -32,11 +34,11 @@ const AdmitCardGenerator = ({studentData}) => {
     doc.addImage(imageUrI, 'jpg', 24, -5, 400, 89)
 
     //Adding qrcode
-    doc.addImage(url, 'png', doc.internal.pageSize.width - 100, 145)
+    doc.addImage(url, 'png', doc.internal.pageSize.width - 100, 160)
 
     // Setting up Exam Session
-    doc.setFontSize(40)
-    doc.text(150, 100, 'Admit Card')
+    doc.setFontSize(35)
+    doc.text(82, 100, 'Admit Card - Final Exam')
 
     //Setting Line
     doc.setDrawColor(44, 45, 146)
@@ -61,17 +63,20 @@ const AdmitCardGenerator = ({studentData}) => {
     doc.text(135, 240, ':')
     doc.text(150, 240, 'CSE')
 
-    
+    doc.text(50, 270, 'Semester')
+    doc.text(135, 270, ':')
+    doc.text(150, 270, 'Summer - 2021')
   
 
     doc.setDrawColor(44, 45, 146)
     doc.setLineWidth(1)
-    doc.line(0, doc.internal.pageSize.height - 30, doc.internal.pageSize.width, doc.internal.pageSize.height - 30)
+    doc.line(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, doc.internal.pageSize.height - 20)
 
     doc.setTextColor(150);
     doc.setFontSize(12)
     var today = new Date();
-    doc.text(50, doc.internal.pageSize.height - 12, `Timestamp: ${today.getDate()} - ${today.getMonth()+1} - ${today.getFullYear()} :: ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`);
+    doc.text(50, doc.internal.pageSize.height - 8, `Timestamp: ${format(today, 'do MMMM, eeee, yyyy | p')}`);
+    // doc.text(50, doc.internal.pageSize.height - 8, `Timestamp: ${today.getDate()} - ${today.getMonth()+1} - ${today.getFullYear()} :: ${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`);
 
     doc.save(`Admit Card - ${studentData.ID}`);
   }
