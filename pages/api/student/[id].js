@@ -8,18 +8,12 @@ export default async(req, res) => {
 
   if(method === 'GET'){
     const db = client.db();
-
-
-    try{
      const data = await db.collection('studentInfo').findOne({ID});
 
-     if(!data) { res.status(400).json({error : error}); }
-
-      res.status(200).json(data);
-    }
-    catch(error){
-      res.status(400).json({error : error});
-    }
+      if(!data) { res.status(200).json({notFound : true}); }
+      else {
+        res.status(200).json(data);
+      }
   }
   
 
@@ -43,7 +37,6 @@ export default async(req, res) => {
 
 else if(method === 'PUT'){
   const db = client.db();
-console.log(req.body);
 
   try{ 
    const data = await db.collection('studentInfo').updateOne( {ID : req.body.ID} , 

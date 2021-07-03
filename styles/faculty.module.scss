@@ -225,12 +225,11 @@ $color-white: #FFF;
     8px 4px 12px 0 #d1d9e6,
     4px 4px 4px 0 #d1d9e6 inset,
     -4px -4px 4px 0 #ffffff inset;
-
   padding: 20px 50px;
   border-radius: 20px;
   font-size: 23px;
   margin-top: 20px;
-
+  text-align: center;
   @media (max-width:480px) {
     box-shadow: none;
     padding: 0px;
