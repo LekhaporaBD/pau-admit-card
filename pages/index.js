@@ -79,9 +79,9 @@ const Login = () => {
                       <div className={Styles.selectWrapper}>
                         <select className={`${Styles.examSession} ${Styles.select}`} >
                             <option value="0" selected disabled > Exam session </option>
-                            <option value="1"  > Summer 2021 </option>
-                            <option value="2" disabled > Fall 2021 </option>
-                            <option value="3" disabled > Spring 2021 </option>
+                            <option value="1" disabled > Summer 2021 </option>
+                            <option value="2"  > Spring 2021 </option>
+                            <option value="3" disabled > Fall 2021 </option>
                         </select>
                         </div>
                         <div className={Styles.selectWrapper}>
@@ -111,10 +111,15 @@ const Login = () => {
                     </div>
 
                     { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
+<<<<<<< HEAD
 
                         <AdmitCardGenerator studentData={studentData}/> : 
 
                             <button className={`${Styles.red} ${Styles.button}`} type="button" 
+=======
+                        <AdmitCardGenerator studentData={studentData}/> : 
+                           <button className={`${Styles.red} ${Styles.button}`} type="button" 
+>>>>>>> 749f5251db949e14d581e19635ab616b41393f65
                                 onClick={ () => Router.reload(window.location.pathname) }>
                                     Go Back 
                             </button> 
