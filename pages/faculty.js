@@ -117,7 +117,8 @@ const Login = () => {
                   }
                  
                     <div style={{textAlign:'center'}}>
-                     <QRCode value={`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`}  />
+                     <QRCode 
+                        value=  {`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`}  />
                     </div>
 
                  <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={() => Router.reload(window.location.pathname)}>

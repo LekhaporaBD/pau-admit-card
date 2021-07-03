@@ -111,15 +111,9 @@ const Login = () => {
                     </div>
 
                     { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-<<<<<<< HEAD
 
-                        <AdmitCardGenerator studentData={studentData}/> : 
-
-                            <button className={`${Styles.red} ${Styles.button}`} type="button" 
-=======
                         <AdmitCardGenerator studentData={studentData}/> : 
                            <button className={`${Styles.red} ${Styles.button}`} type="button" 
->>>>>>> 749f5251db949e14d581e19635ab616b41393f65
                                 onClick={ () => Router.reload(window.location.pathname) }>
                                     Go Back 
                             </button> 
