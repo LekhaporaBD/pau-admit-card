@@ -39,7 +39,7 @@ const AdmitCardGenerator = ({studentData}) => {
 
     // Setting up Exam Session
     doc.setFontSize(35)
-    doc.text(82, 100, 'Admit Card - Final Exam')
+    doc.text(82, 100, 'Admit Card - Mid Exam')
 
     //Setting Line
     doc.setDrawColor(44, 45, 146)
@@ -66,7 +66,7 @@ const AdmitCardGenerator = ({studentData}) => {
 
     doc.text(50, 270, 'Semester')
     doc.text(135, 270, ':')
-    doc.text(150, 270, 'Spring - 2021')
+    doc.text(150, 270, 'Summer - 2021')
   
 
     doc.setDrawColor(44, 45, 146)
