@@ -14,8 +14,9 @@ const Login = () => {
         studentid: '',
       });
 
-    const [err , seterr ] = useState('')
-
+    const [err , seterr] = useState('');
+    const [session, setSession] = useState('Summer - 2021')
+    const [term, setTerm] = useState('Mid Exam')
     const [submitClicked , setsubmitClicked ] = useState(false)
 
     const [studentData , setStudentData] = useState({})
@@ -49,6 +50,7 @@ const Login = () => {
 
         setValues({studentid : ''})
       }
+      console.log(values)
     
     return (
         <div className={Styles.container}> 
@@ -78,18 +80,24 @@ const Login = () => {
 
                     <div className={Styles.optionHolder} >
                       <div className={Styles.selectWrapper}>
-                        <select className={`${Styles.examSession} ${Styles.select}`} >
-                            <option value="0" selected disabled > Exam session </option>
-                            <option value="1"  > Summer 2021 </option>
-                            <option value="2" disabled> Spring 2021 </option>
-                            <option value="3" disabled > Fall 2021 </option>
+                        <select 
+                            value={session}
+                            className={`${Styles.examSession} ${Styles.select}`} 
+                            onChange={(e) => setSession(e.target.value)}
+                        >
+                            <option value="Summer - 2021" selected > Summer 2021 </option>
+                            <option value="Spring - 2021" disabled> Spring 2021 </option>
+                            <option value="Fall - 2021" disabled > Fall 2021 </option>
                         </select>
                         </div>
                         <div className={Styles.selectWrapper}>
-                        <select className={`${Styles.examType} ${Styles.select}`} >
-                            <option value="7" selected disabled > Exam Type </option>
-                            <option value="8"  > Mid Exam </option>
-                            <option value="9"  > Final Exam </option>
+                        <select 
+                            value={term}
+                            className={`${Styles.examType} ${Styles.select}`}
+                            onChange={(e) => setTerm(e.target.value)}
+                         >
+                            <option value="Mid Exam" selected > Mid Exam </option>
+                            <option value="Final Exam"> Final Exam </option>
                         </select>      
                         </div>
                     </div>
@@ -112,7 +120,7 @@ const Login = () => {
                     </div>
 
                     { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-                        <AdmitCardGenerator studentData={studentData}/> : 
+                        <AdmitCardGenerator studentData={studentData} session={session} term={term}/> : 
                            <button className={`${Styles.red} ${Styles.button}`} type="button" 
                                 onClick={ () => Router.reload(window.location.pathname) }>
                                     Go Back 

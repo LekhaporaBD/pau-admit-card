@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import Image from 'next/image';
 import Styles from '../styles/faculty.module.scss';
 import axios from 'axios';
-import AdmitCardGenerator from '../components/admitCardGenerator';
 import Router from 'next/router';
 import QRCode from 'qrcode.react';
 import Spinner from '../components/spinner/spinner'
