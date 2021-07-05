@@ -6,6 +6,7 @@ import QRCode from 'qrcode.react'
 import AdmitCardGenerator from '../components/admitCardGenerator'
 import Spinner from '../components/spinner/spinner'
 import Router from 'next/router';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const Login = () => {   
     
@@ -51,7 +52,6 @@ const Login = () => {
 
         axios.get(`/api/student/${id}`)
         .then(function (res) {
-            console.log(res);
             setStudentData(res.data)
         })
         .catch(function (error) {
@@ -73,6 +73,7 @@ const Login = () => {
         width: '70%',
         margin: '0 auto'
     }
+
     
     return (
         <div className={Styles.container}> 
@@ -86,7 +87,7 @@ const Login = () => {
                     <p style={{fontSize:30 , color:'darkblue'}} > Download Your Admit Card <br/> From Here  </p>
                 </div>
 
-                { (submitClicked && Object.keys(studentData).length === 0 ) ? <Spinner /> : Object.keys(studentData).length === 0 ? 
+                { (submitClicked && Object.keys(studentData).length === 0 ) ? <Spinner /> : Object.keys(studentData).length === 0 ?   
                     
                 <form className={Styles.form}>
                     <label className={Styles.label}>
@@ -136,7 +137,17 @@ const Login = () => {
 
                 </form>  
                 
-                :
+                : studentData.notFound ? (
+                    <div className={Styles.studentData}>
+                        <CancelIcon style={{width: '7rem', height: '7rem', color: '#6ab04c'}}/>
+                        <p style={{textAlign: 'center'}}>Sorry, The ID you searched for is Not Found in our Database</p>
+                        <button className={`${Styles.red} ${Styles.button}`} type="button" 
+                                onClick={ () => Router.reload(window.location.pathname) }>
+                                    Go Back 
+                        </button> 
+                    </div>
+                ) 
+                : (
                            
                 <div className={Styles.studentData}>  
                     <p> Name : {studentData.Name}</p>
@@ -157,6 +168,7 @@ const Login = () => {
                     }
 
                   </div>
+                )
                 }
                 
                 

@@ -5,6 +5,7 @@ export default async(req, res) => {
   if(req.method === 'GET'){
     const db = client.db();
     const data = await db.collection('studentInfo').find().toArray();
+    await console.log(data)
     res.status(200).json(data);
   }
   // To edit Student Payment Info
