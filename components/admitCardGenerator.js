@@ -7,12 +7,12 @@ import { format } from 'date-fns';
 import Styles from '../styles/faculty.module.scss';
 
 
-const AdmitCardGenerator = ({studentData}) => {
 
+const AdmitCardGenerator = ({studentData, session, term}) => {
   const [url, setUrl] = useState('')
 
   useEffect(() => {
-    QRCode.toDataURL(`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`)
+    QRCode.toDataURL(`${studentData.Name} have permission to sit for exam`)
     .then(url => {
       setUrl(url)
     })
@@ -39,7 +39,7 @@ const AdmitCardGenerator = ({studentData}) => {
 
     // Setting up Exam Session
     doc.setFontSize(35)
-    doc.text(82, 100, 'Admit Card - Mid Exam')
+    doc.text(82, 100, `Admit Card - ${term}`)
 
     //Setting Line
     doc.setDrawColor(44, 45, 146)
@@ -66,7 +66,7 @@ const AdmitCardGenerator = ({studentData}) => {
 
     doc.text(50, 270, 'Semester')
     doc.text(135, 270, ':')
-    doc.text(150, 270, 'Summer - 2021')
+    doc.text(150, 270, session)
   
 
     doc.setDrawColor(44, 45, 146)

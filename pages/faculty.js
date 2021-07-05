@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import Image from 'next/image';
 import Styles from '../styles/faculty.module.scss';
 import axios from 'axios';
-import AdmitCardGenerator from '../components/admitCardGenerator';
 import Router from 'next/router';
 import QRCode from 'qrcode.react';
 import Spinner from '../components/spinner/spinner'
@@ -14,8 +13,12 @@ const Login = () => {
       });
 
     const [err , seterr ] = useState('')
+    const [settingErr , setSettingErr ] = useState('')
 
     const [submitClicked , setsubmitClicked ] = useState(false)
+
+    const [examSessionValue , setexamSessionValue ] = useState('Summer - 2021')
+    const [examTypeValue , setexamTypeValue ] = useState('Mid Exam')
 
     const [studentData , setStudentData] = useState({})
 
@@ -29,16 +32,28 @@ const Login = () => {
       const handleSubmit = (e) => {
 
         e.preventDefault();
-        setsubmitClicked(true)
+        
         let id = values.studentid
+        
+        if( id === '' || examTypeValue === '' || examSessionValue === '' ){
+            setSettingErr('Fillup All the Fields ... ')
+            return;
+        }
 
-        if(id.length < 9) seterr('Invalid Student ID ')
-        else if(id.includes('-')) {id =  id.split('-').join(' ')}
+        else if(id.length < 9) {
+            seterr('Invalid Student ID ')
+            return;
+        } 
+
+        
+        
+        setsubmitClicked(true)
+
+        if(id.includes('-')) {id =  id.split('-').join(' ')}
         else if(id.length === 9) {id =  [id.substr(0,3) , id.substr(3,3) , id.substr(6,3)].join(' ')}
 
         axios.get(`/api/student/${id}`)
         .then(function (res) {
-            console.log(res);
             setStudentData(res.data)
         })
         .catch(function (error) {
@@ -50,6 +65,18 @@ const Login = () => {
         setValues({studentid : ''})
       }
     
+
+      const errorStyle = {
+        color:'#b34040' ,
+        boxShadow:'-5px -5px 20px #fff,5px 5px 20px #babecc',
+        padding:10 , 
+        textAlign:'center', 
+        border:'1px solid' ,
+        fontSize : 13,
+        width: '70%',
+        margin: '0 auto'
+    }
+
 
     return (
         <div className={Styles.container}> 
@@ -75,12 +102,12 @@ const Login = () => {
                         value = {values.studentid}
                         />
                     </label>
-                    { err && <p style={{color:'red'}} > {err} </p>}
+                    { err && <p style={errorStyle} > {err} </p>}
 
                     <div className={Styles.optionHolder} >
                     <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examSession} ${Styles.select}`} >
+                        <select className={`${Styles.examSession} ${Styles.select}`} onChange={ (e) => setexamSessionValue(e.target.value)} >
                             <option value="0" selected disabled >Exam session </option>
                             <option value="1"  > Summer 2021 </option>
                             <option value="2" disabled > Fall 2021 </option>
@@ -89,7 +116,7 @@ const Login = () => {
                         </div>
                         <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examType} ${Styles.select}`} >
+                        <select className={`${Styles.examType} ${Styles.select}`} onChange={ (e) => setexamTypeValue(e.target.value)} >
                             <option value="7" selected disabled >Exam Type </option>
                             <option value="8"  > Mid Exam </option>
                             <option value="9"  > Final Exam </option>
@@ -97,7 +124,12 @@ const Login = () => {
                         </div>         
                     </div>
 
-                    <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
+                    { settingErr && <p 
+                        style={errorStyle} > 
+                        {settingErr} </p>
+                    }
+
+                    <button className={`${Styles.indigo} ${Styles.button}`} type="submit" onClick={handleSubmit}>
                         Verify Student
                     </button> 
 
@@ -111,14 +143,13 @@ const Login = () => {
                     <p> ID : {studentData.ID}</p>
                     
                   { (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? 
-                    <p> {studentData.Name} is <br/> Allowed For Sitting In The Exam  </p> : 
-                    <p> {studentData.Name} is <br/> <span style={{color:'red'}}> Not </span> Allowed For Sitting In The Exam  </p>  
+                    <p> {studentData.Name} is  Allowed For Sitting In The Exam  </p> : 
+                    <p> {studentData.Name} is  <span style={{color:'red'}}> Not </span> Allowed For Sitting In The Exam  </p>  
                       
                   }
                  
                     <div style={{textAlign:'center'}}>
-                     <QRCode 
-                        value=  {`${studentData.Name} have ${studentData[' Cumulative Dues ']} taka Dues`}  />
+                    <QRCode value={`${studentData.Name} ${ (studentData.havePermission || studentData[' Cumulative Dues '] < 5000 ) ? '' : 'dont'} have permission to sit for exam`}  />
                     </div>
 
                  <button className={`${Styles.red} ${Styles.button}`} type="button" onClick={() => Router.reload(window.location.pathname)}>

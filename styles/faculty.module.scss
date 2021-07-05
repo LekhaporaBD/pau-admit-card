@@ -125,15 +125,16 @@ $color-white: #FFF;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  margin-bottom: 25px;
 
 
   &:focus {
     box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
   }
 
-  @media (max-width:480px) {
-    margin-bottom: 20px;
-  }
+  // @media (max-width:480px) {
+  //   margin-bottom: 20px;
+  // }
 }
 
 .examSession {
@@ -171,6 +172,12 @@ $color-white: #FFF;
     display: block;
     width: 100%;
     color: $color-red;
+  }
+
+  &.indigo {
+    display: block;
+    width: 100%;
+    color:  #4b0082;
   }
 }
 

@@ -13,6 +13,10 @@ const Login = () => {
       });
 
     const [err , seterr ] = useState('')
+    const [settingErr , setSettingErr ] = useState('')
+
+    const [examSessionValue , setexamSessionValue ] = useState('Summer - 2021')
+    const [examTypeValue , setexamTypeValue ] = useState('Mid Exam')
 
     const [submitClicked , setsubmitClicked ] = useState(false)
     // const [checked , setchecked ] = useState(false)
@@ -52,8 +56,21 @@ const Login = () => {
       const handleSubmit = (e) => {
 
         e.preventDefault();
-        setsubmitClicked(true)
         let id = values.studentid
+        
+        if( id === '' || examTypeValue === '' || examSessionValue === '' ){
+            setSettingErr('Fillup All the Fields ... ')
+            return;
+        }
+
+        else if(id.length < 9) {
+            seterr('Invalid Student ID ')
+            return;
+        } 
+
+        
+        
+        setsubmitClicked(true)
 
         if(id.length < 9) seterr('Invalid Student ID ')
         else if(id.includes('-')) {id =  id.split('-').join(' ')}
@@ -72,6 +89,19 @@ const Login = () => {
 
         setValues({studentid : ''})
       }
+
+      
+      const errorStyle = {
+        color:'#b34040' ,
+        boxShadow:'-5px -5px 20px #fff,5px 5px 20px #babecc',
+        padding:10 , 
+        textAlign:'center', 
+        border:'1px solid' ,
+        fontSize : 13,
+        width: '70%',
+        margin: '0 auto'
+    }
+
     
     return (
         <div className={Styles.container}> 
@@ -100,12 +130,12 @@ const Login = () => {
                         value = {values.studentid}
                         />
                     </label>
-                    { err && <p style={{color:'red'}} > {err} </p>}
+                    { err && <p style={errorStyle} > {err} </p>}
 
                     <div className={Styles.optionHolder} >
                     <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examSession} ${Styles.select}`} >
+                    <select className={`${Styles.examSession} ${Styles.select}`} value={examSessionValue} onChange={ (e) => setexamSessionValue(e.target.value)} >
                             <option value="0" selected disabled >Exam session </option>
                             <option value="1"  > Summer 2021 </option>
                             <option value="2" disabled > Fall 2021 </option>
@@ -114,13 +144,18 @@ const Login = () => {
                         </div>
                         <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examType} ${Styles.select}`} >
+                        <select className={`${Styles.examType} ${Styles.select}`} value={examTypeValue} onChange={ (e) => setexamTypeValue(e.target.value)} >
                             <option value="7" selected disabled >Exam Type </option>
                             <option value="8"  > Mid Exam </option>
                             <option value="9"  > Final Exam </option>
                         </select>        
                         </div>           
                     </div>
+
+                    { settingErr && <p 
+                        style={errorStyle} > 
+                        {settingErr} </p>
+                    }
 
                     <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
                         Search Student
@@ -134,7 +169,6 @@ const Login = () => {
 
                     <p> Name : {studentData.Name}</p>
                     <p> ID : {studentData.ID}</p>
-                    <p> Cumulative Dues : {studentData[' Cumulative Dues ']}</p>
 
                     <p style={{display:'flex'}}> Give Special Permission : 
                     <label className={Styles.toggleLabel}>
