@@ -107,7 +107,7 @@ const Login = () => {
                     <div className={Styles.optionHolder} >
                     <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examSession} ${Styles.select}`} onChange={ (e) => setexamSessionValue(e.target.value)} >
+                        <select className={`${Styles.examSession} ${Styles.select}`} value={examSessionValue} onChange={ (e) => setexamSessionValue(e.target.value)} >
                             <option value="0" selected disabled >Exam session </option>
                             <option value="1"  > Summer 2021 </option>
                             <option value="2" disabled > Fall 2021 </option>
@@ -116,7 +116,7 @@ const Login = () => {
                         </div>
                         <div className={Styles.selectWrapper}>
 
-                        <select className={`${Styles.examType} ${Styles.select}`} onChange={ (e) => setexamTypeValue(e.target.value)} >
+                        <select className={`${Styles.examType} ${Styles.select}`} value={examTypeValue} onChange={ (e) => setexamTypeValue(e.target.value)} >
                             <option value="7" selected disabled >Exam Type </option>
                             <option value="8"  > Mid Exam </option>
                             <option value="9"  > Final Exam </option>
