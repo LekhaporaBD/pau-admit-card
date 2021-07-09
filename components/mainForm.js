@@ -1,13 +1,8 @@
 import React,{useState} from 'react';
-import Image from 'next/image';
 import Styles from '../styles/faculty.module.scss';
 import axios from 'axios';
-import Router from 'next/router';
-import QRCode from 'qrcode.react';
-import Spinner from '../components/spinner/spinner'
 
-
-const mainForm = () => {
+const MainForm = ({setsubmitClicked , setStudentData}) => {
 
     const [values, setValues] = useState({
         studentid: '',
@@ -16,13 +11,8 @@ const mainForm = () => {
     const [err , seterr ] = useState('')
     const [settingErr , setSettingErr ] = useState('')
 
-    const [submitClicked , setsubmitClicked ] = useState(false)
-
-    const [examSessionValue , setexamSessionValue ] = useState('')
-    const [examTypeValue , setexamTypeValue ] = useState('')
-
-    const [studentData , setStudentData] = useState({})
-
+    const [session, setSession] = useState('Summer - 2021')
+    const [term, setTerm] = useState('Mid Exam')
     
       const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -36,10 +26,10 @@ const mainForm = () => {
         
         let id = values.studentid
         
-        if( id === '' || examTypeValue === '' || examSessionValue === '' ){
-            setSettingErr('Fillup All the Fields ... ')
-            return;
-        }
+        if( id === '' || term === '' || session === '' ){
+          setSettingErr('Fillup All the Fields ... ')
+          return;
+      }
 
         else if(id.length < 9) {
             seterr('Invalid Student ID ')
@@ -69,9 +59,56 @@ const mainForm = () => {
 
     return (
         <div>
-            
+                            <form className={Styles.form}>
+                    <label className={Styles.label}>
+                        <input 
+                        type = "text" 
+                        placeholder = "Student ID" 
+                        className = {Styles.input} 
+                        onChange = {handleChange('studentid')}
+                        value = {values.studentid}
+                        />
+                    </label>
+                    { err && <p style={errorStyle} > {err} </p>}
+
+                    <div className={Styles.optionHolder} >
+                      <div className={Styles.selectWrapper}>
+                        <select 
+                            value={session}
+                            className={`${Styles.examSession} ${Styles.select}`} 
+                            onChange={(e) => setSession(e.target.value)}
+                        >
+                            <option value="Summer - 2021" selected > Summer 2021 </option>
+                            <option value="Spring - 2021" disabled> Spring 2021 </option>
+                            <option value="Fall - 2021" disabled > Fall 2021 </option>
+                        </select>
+                        </div>
+                        <div className={Styles.selectWrapper}>
+                        <select 
+                            value={term}
+                            className={`${Styles.examType} ${Styles.select}`}
+                            onChange={(e) => setTerm(e.target.value)}
+                         >
+                            <option value="Mid Exam" selected > Mid Exam </option>
+                            <option value="Final Exam"> Final Exam </option>
+                        </select>      
+                        </div>
+                    </div>
+
+                    { settingErr && <p 
+                        style={errorStyle} > 
+                        {settingErr} </p>
+                    }
+
+
+                    <button className={`${Styles.red} ${Styles.button}`} type="submit" onClick={handleSubmit}>
+                        Submit
+                    </button> 
+
+                </form>  
+                
         </div>
     )
 }
 
-export default mainForm
+export default MainForm

@@ -9,6 +9,7 @@ $color-white: #FFF;
 .container,
 .input,
 .button,
+.subButton,
 .select {
   font-family: 'Montserrat', sans-serif;
   letter-spacing: -0.2px;
@@ -49,6 +50,7 @@ $color-white: #FFF;
 
 
 .button,
+.subButton,
 .input,
 .select {
   border: 0;
@@ -241,4 +243,31 @@ $color-white: #FFF;
     box-shadow: none;
     padding: 0px;
   }
+}
+
+
+
+.subButton {
+  color: #037575;
+  border: 1px solid;
+  font-size: 13px;
+  padding: 10px;
+  right: 1;
+  font-weight: bold;
+  box-shadow: -5px -5px 20px $color-white, 5px 5px 20px $color-shadow;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 50px;
+
+  &:hover {
+    box-shadow: -2px -2px 5px $color-white, 2px 2px 5px $color-shadow;
+
+  }
+
+  &:active {
+    box-shadow: inset 1px 1px 2px $color-shadow, inset -1px -1px 2px $color-white;
+
+  }
+
 }
